@@ -4,7 +4,9 @@ class FoursquareHelperException extends Exception {
 }
 
 class FoursquareHelper {
-	private $base_url = 'https://api.foursquare.com';
+	const DATEVERIFIED = '20120221';
+	
+	private $base_url = 'https://api.foursquare.com/';
 	private $auth_url = 'https://foursquare.com/oauth2/authenticate';
 	private $token_url = 'https://foursquare.com/oauth2/access_token';
 	
@@ -22,14 +24,13 @@ class FoursquareHelper {
 	}
 	
 	public function set_redirect_url($url) {
-		$this->redirect_url = $url
+		$this->redirect_url = $url;
 	}
 	
 	public function get_public($endpoint, $params=NULL) {
 		$url = $this->base_url . trim ($endpoint, '/');
 		$params['client_id'] = $this->client_id;
 		$params['client_secret'] = $this->client_secret;
-		
 		return $this->get ($url, $params);
 	}
 	
@@ -70,7 +71,7 @@ class FoursquareHelper {
 			'redirect_uri' => $redirect
 			);
 			
-		$this->make_url ($this->auth_url, $params);
+		return $this->make_url ($this->auth_url, $params);
 	}
 	
 	public function get_token($code, $redirect=NULL) {
@@ -78,14 +79,14 @@ class FoursquareHelper {
 			$redirect = $this->redirect_url;
 		}
 		
-		params = array (
+		$params = array (
 			'client_id' => $this->client_id,
 			'client_secret' => $this->client_secret,
 			'grant_type' => 'authorization_code',
 			'redirect_uri' => $redirect,
 			'code' => $code
 			);
-		
+
 		$result = $this->get ($this->token_url, $params);
 		$json = json_decode ($result);
 		$this->set_access_token ($json->access_token);
@@ -93,10 +94,12 @@ class FoursquareHelper {
 	}
 	
 	private function get($url, $params=NULL) {
+		$params['v'] = DATEVERIFIED;
 		return $this->request ($url, $params, 'GET');
 	}
 	
 	private function post($url, $params=NULL) {
+		$params['v'] = DATEVERIFIED;
 		return $this->request ($url, $params, 'POST');
 	}
 	
@@ -143,6 +146,5 @@ class FoursquareHelper {
 		
 		return $result;
 	}
-	
 }	// end-class
 ?>
