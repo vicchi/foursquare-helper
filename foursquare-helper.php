@@ -94,12 +94,12 @@ class FoursquareHelper {
 	}
 	
 	private function get($url, $params=NULL) {
-		$params['v'] = DATEVERIFIED;
+		$params['v'] = self::DATEVERIFIED;
 		return $this->request ($url, $params, 'GET');
 	}
 	
 	private function post($url, $params=NULL) {
-		$params['v'] = DATEVERIFIED;
+		$params['v'] = self::DATEVERIFIED;
 		return $this->request ($url, $params, 'POST');
 	}
 	
