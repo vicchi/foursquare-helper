@@ -6,7 +6,7 @@ if (!class_exists ('FoursquareHelperException_v1_0')) {
 }
 
 if (!class_exists ('FoursquareHelper_v1_0')) {
-	class FoursquareHelper {
+	class FoursquareHelper_v1_0 {
 		const DATEVERIFIED = '20120221';
 	
 		private $base_url = 'https://api.foursquare.com/';
